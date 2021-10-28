@@ -88,8 +88,6 @@ def scrape():
         item = result.find('div', class_='description')
         header = item.find('h3').text
         
-        x = result.find('a', class_='itemLink product-item')['href']
-        
         browser.links.find_by_partial_text(header).click()
         
         html_2 = browser.html

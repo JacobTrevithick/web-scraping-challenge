@@ -15,14 +15,11 @@ def home():
 
     # Find one record of data from the mongo database
     # @TODO: YOUR CODE HERE!
-    facts_data = facts_collection.find()
-    
-    # return template and data
-    for latest_facts in facts_data:
-        return render_template("index.html", facts=latest_facts)
+    facts_data = facts_collection.find_one()
 
-
-
+    # for latest_facts in facts_data:
+    return render_template("index.html", facts=facts_data)
+   
 
 # Route that will trigger the scrape function
 @app.route("/scrape")
@@ -30,11 +27,11 @@ def scrape():
 
     # Run the scrape function and save the results to a variable
     # @TODO: YOUR CODE HERE!
-    item = scrape_costa.scrape_info()
+    item = scrape_mars.scrape()
 
     # Update the Mongo database using update and upsert=True
     # @TODO: YOUR CODE HERE!
-    temps.insert_one(item)
+    facts_collection.insert_one(item)
 
     # Redirect back to home page
     return redirect("/")

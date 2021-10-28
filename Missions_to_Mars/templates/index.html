@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars Fact Sheet</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mars... The Red Planet</h1>
+      <p>Click below for some fun facts</p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Facts!</a></p>
+    </div>
+    <h2>Latest News:</h2>
+    <h3>Title: {{ facts.news_title }}</h3>
+    <h3>Description: {{ facts.news_p }}</h3>
+    <div class = 'row'>
+        <div class = 'col-lg-6'>
+            <h2>Featured Mars Image</h2>
+            <img src="{{ facts.mars_image }}" alt="Mars">
+        </div>
+        <div class = 'col-lg-6'>
+            <h2>Mars vs. Earth Comparison</h2>
+            {{ facts.mars_facts|safe }}
+        </div>
+    </div>
+
+    <div class = 'row'>
+        <h2 style='text-align: center;'>Mars Hemispheres</h2>
+        
+        {% for x in range(4) %}
+        <div class = 'col-lg-3'>
+            <div class="card">
+                <img class="card-img-top" src="{{ facts.hem_imgs[x]['url'] }}" alt="Card image cap" style="width: 100%; height: auto; object-fit: cover;">
+                <div class="card-body">
+                  <h3 class="card-title">{{ facts.hem_imgs[x]['title'] }}</h3>
+                </div>
+              </div>
+        </div>
+        
+        {% endfor %}
+        <!-- <div class = 'col-md-3'>
+            <h2>Mars vs. Earth Comparison</h2>
+            {{ facts.mars_facts|safe }}
+        </div>
+        <div class = 'col-md-3'>
+            <h2>Mars vs. Earth Comparison</h2>
+            {{ facts.mars_facts|safe }}
+        </div>
+        <div class = 'col-md-3'>
+            <h2>Mars vs. Earth Comparison</h2>
+            {{ facts.mars_facts|safe }} -->
+        <!-- </div> -->
+    </div>
+    
+  </div>
+  </div>
+</body>
+
+</html>
