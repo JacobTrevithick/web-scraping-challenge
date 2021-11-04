@@ -63,7 +63,7 @@ def scrape():
     mars_facts_df = mars_facts_df.drop(0,axis=0)
     
     # export table to html code string
-    table_string = mars_facts_df.to_html()
+    table_string = mars_facts_df.to_html(classes='table table-dark', index=False)
     
     website_dict['mars_facts'] = table_string
     

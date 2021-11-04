@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect
 from pymongo.mongo_client import MongoClient
+# import pymongo
 import scrape_mars
 
 # Create an instance of Flask
@@ -15,8 +16,8 @@ def home():
 
     # Find one record of data from the mongo database
     # @TODO: YOUR CODE HERE!
-    facts_data = facts_collection.find_one()
-
+    facts_data = facts_collection.find().sort('_id', -1).limit(1)[0]
+ 
     # for latest_facts in facts_data:
     return render_template("index.html", facts=facts_data)
    
