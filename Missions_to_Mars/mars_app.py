@@ -8,17 +8,26 @@ app = Flask(__name__)
 
 client = MongoClient("mongodb://localhost:27017")
 
-facts_collection = client.mars_db.facts
+mars_db = client['mars_db']
+
+facts_collection = mars_db.facts
 
 # Route to render index.html template using data from Mongo
 @app.route("/")
 def home():
 
     # Find one record of data from the mongo database
-    # @TODO: YOUR CODE HERE!
-    facts_data = facts_collection.find().sort('_id', -1).limit(1)[0]
- 
-    # for latest_facts in facts_data:
+    
+    # Attempt to find the latest record in the mongodb
+    try:
+        # Fails if first time through script since mars_db would be empty
+        facts_data = facts_collection.find().sort('_id', -1).limit(1)[0]
+    
+    # Redirects to /scrape to populate the first document in database
+    except:
+        return redirect("/scrape")
+    
+
     return render_template("index.html", facts=facts_data)
    
 
@@ -27,11 +36,9 @@ def home():
 def scrape():
 
     # Run the scrape function and save the results to a variable
-    # @TODO: YOUR CODE HERE!
     item = scrape_mars.scrape()
 
     # Update the Mongo database using update and upsert=True
-    # @TODO: YOUR CODE HERE!
     facts_collection.insert_one(item)
 
     # Redirect back to home page
